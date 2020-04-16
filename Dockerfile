@@ -47,6 +47,19 @@ LABEL description="Base image for real and complex FEniCS test environments"
 ARG GMSH_VERSION
 ARG PYBIND11_VERSION
 
+ARG NB_USER=bhaveshshrimali
+ARG NB_UID=1000
+ENV USER ${NB_USER}
+ENV NB_UID ${NB_UID}
+ENV HOME /home/${NB_USER}
+
+RUN adduser --disabled-password \
+    --gecos "Default user" \
+    --uid ${NB_UID} \
+    ${NB_USER}
+
+
+
 WORKDIR /tmp
 
 # Environment variables
@@ -334,7 +347,7 @@ ONBUILD RUN pip3 install --no-cache-dir ipython && \
     pip3 install --no-cache-dir git+https://github.com/FEniCS/fiat.git && \
     pip3 install --no-cache-dir git+https://github.com/FEniCS/ufl.git && \
     pip3 install --no-cache-dir git+https://github.com/FEniCS/ffcx.git && \
-    pip3 install --no-cache-dir meshio pygmsh
+    pip3 install --no-cache-dir jupyter notebook meshio pygmsh
 
 # Install dolfinx
 ONBUILD RUN git clone https://github.com/fenics/dolfinx.git && \
@@ -374,7 +387,7 @@ WORKDIR /root
 ARG TINI_VERSION
 ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini && \
-    pip3 install --no-cache-dir jupyter jupyterlab
+    pip3 install --no-cache-dir jupyter jupyterlab notebook
 
 ENTRYPOINT ["/tini", "--", "jupyter", "notebook", "--ip", "0.0.0.0", "--no-browser", "--allow-root"]
 
@@ -406,3 +419,8 @@ LABEL description="DOLFIN-X (complex mode) Jupyter Lab"
 
 WORKDIR /root
 ENTRYPOINT ["/tini", "--", "jupyter", "lab", "--ip", "0.0.0.0", "--no-browser", "--allow-root"]
+
+COPY . ${HOME}
+USER root
+RUN chown -R ${NB_UID} ${HOME}
+USER ${NB_USER}
