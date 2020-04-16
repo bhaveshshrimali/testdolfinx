@@ -300,15 +300,15 @@ ONBUILD RUN git clone https://github.com/fenics/dolfinx.git && \
     ninja ${MAKEFLAGS} install && \
     cd ../python && \
     pip3 install . && \
-    rm -rf /tmp/*
-    git clone https://github.com/jorgensd/dolfinx_mpc.git
-    cd dolfinx_mpc
-    rm -rf build
-    mkdir -p build
-    cd build
-    cmake -G Ninja -DCMAKE_BUILD_TYPE=Developer ../cpp/
-    ninja -j3 install
-    cd ../python
+    rm -rf /tmp/* && \
+    git clone https://github.com/jorgensd/dolfinx_mpc.git && \
+    cd dolfinx_mpc && \
+    rm -rf build && \
+    mkdir -p build && \
+    cd build && \
+    cmake -G Ninja -DCMAKE_BUILD_TYPE=Developer ../cpp/ && \
+    ninja -j3 install && \
+    cd ../python && \
     pip3 install . --upgrade
 
 ONBUILD WORKDIR /root
@@ -332,7 +332,7 @@ ONBUILD WORKDIR /tmp
 ONBUILD RUN pip3 install --no-cache-dir ipython && \
     pip3 install --no-cache-dir git+https://github.com/FEniCS/fiat.git && \
     pip3 install --no-cache-dir git+https://github.com/FEniCS/ufl.git && \
-    pip3 install --no-cache-dir git+https://github.com/FEniCS/ffcx.git
+    pip3 install --no-cache-dir git+https://github.com/FEniCS/ffcx.git && \
     pip3 install --no-cache-dir jupyter-notebook meshio pygmsh
 
 # Install dolfinx
@@ -344,15 +344,15 @@ ONBUILD RUN git clone https://github.com/fenics/dolfinx.git && \
     ninja ${MAKEFLAGS} install && \
     cd ../python && \
     pip3 install . && \
-    rm -rf /tmp/*
-    git clone https://github.com/jorgensd/dolfinx_mpc.git
-    cd dolfinx_mpc
-    rm -rf build
-    mkdir -p build
-    cd build
-    cmake -G Ninja -DCMAKE_BUILD_TYPE=Developer ../cpp/
-    ninja -j3 install
-    cd ../python
+    rm -rf /tmp/* && \
+    git clone https://github.com/jorgensd/dolfinx_mpc.git && \
+    cd dolfinx_mpc && \
+    rm -rf build && \
+    mkdir -p build && \
+    cd build && \
+    cmake -G Ninja -DCMAKE_BUILD_TYPE=Developer ../cpp/ && \
+    ninja -j3 install && \
+    cd ../python && \
     pip3 install . --upgrade
 
 
