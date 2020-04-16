@@ -346,6 +346,7 @@ ONBUILD RUN git clone https://github.com/fenics/dolfinx.git && \
     cd ../python && \
     pip3 install . && \
     rm -rf /tmp/* && \
+    cd ~/ && \
     git clone https://github.com/jorgensd/dolfinx_mpc.git && \
     cd dolfinx_mpc && \
     rm -rf build && \
