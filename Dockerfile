@@ -301,6 +301,15 @@ ONBUILD RUN git clone https://github.com/fenics/dolfinx.git && \
     cd ../python && \
     pip3 install . && \
     rm -rf /tmp/*
+    git clone https://github.com/jorgensd/dolfinx_mpc.git
+    cd dolfinx_mpc
+    rm -rf build
+    mkdir -p build
+    cd build
+    cmake -G Ninja -DCMAKE_BUILD_TYPE=Developer ../cpp/
+    ninja -j3 install
+    cd ../python
+    pip3 install . --upgrade
 
 ONBUILD WORKDIR /root
 
